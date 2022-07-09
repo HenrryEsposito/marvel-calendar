@@ -8,32 +8,33 @@ import Card from "../../molecules/Card";
 const mockItens: IIfinteItem[] = [
   {
     key: uniqueId(),
-    children: <DaySlot dayNumber={1} />,
+    children: <DaySlot key={uniqueId()} dayNumber={1} />,
   },
   {
     key: uniqueId(),
-    children: <DaySlot dayNumber={2} />,
+    children: <DaySlot key={uniqueId()} dayNumber={2} />,
   },
   {
     key: uniqueId(),
-    children: <DaySlot dayNumber={3} />,
+    children: <DaySlot key={uniqueId()} dayNumber={3} />,
   },
   {
     key: uniqueId(),
-    children: <DaySlot dayNumber={4} />,
+    children: <DaySlot key={uniqueId()} dayNumber={4} />,
   },
   {
     key: uniqueId(),
-    children: <DaySlot dayNumber={5} />,
+    children: <DaySlot key={uniqueId()} dayNumber={5} />,
   },
   {
     key: uniqueId(),
-    children: <DaySlot dayNumber={6} />,
+    children: <DaySlot key={uniqueId()} dayNumber={6} />,
   },
   {
     key: uniqueId(),
     children: (
       <DaySlot
+        key={uniqueId()}
         dayNumber={7}
         children={
           <Card
@@ -46,23 +47,23 @@ const mockItens: IIfinteItem[] = [
   },
   {
     key: uniqueId(),
-    children: <DaySlot dayNumber={8} />,
+    children: <DaySlot key={uniqueId()} dayNumber={8} />,
   },
   {
     key: uniqueId(),
-    children: <DaySlot dayNumber={9} />,
+    children: <DaySlot key={uniqueId()} dayNumber={9} />,
   },
   {
     key: uniqueId(),
-    children: <DaySlot dayNumber={10} />,
+    children: <DaySlot key={uniqueId()} dayNumber={10} />,
   },
   {
     key: uniqueId(),
-    children: <DaySlot dayNumber={11} />,
+    children: <DaySlot key={uniqueId()} dayNumber={11} />,
   },
   {
     key: uniqueId(),
-    children: <DaySlot dayNumber={12} />,
+    children: <DaySlot key={uniqueId()} dayNumber={12} />,
   },
 ];
 
