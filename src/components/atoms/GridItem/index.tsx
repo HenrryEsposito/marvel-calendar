@@ -3,9 +3,10 @@ import React, { ReactNode } from "react";
 import { Container } from "./styles";
 
 export interface IGridItem {
+  key: string;
   children?: ReactNode;
 }
 
 export default function GridItem({ children }: IGridItem) {
-  return children ? <Container>{children}</Container> : null;
+  return <Container>{children}</Container>;
 }
