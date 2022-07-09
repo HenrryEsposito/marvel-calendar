@@ -1,4 +1,5 @@
 import React from "react";
+import Calendar from "./components/organisms/Calendar";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       >
         Avengers?
       </button>
+      <Calendar></Calendar>
     </div>
   );
 }
