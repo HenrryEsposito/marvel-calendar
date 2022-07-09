@@ -1,8 +1,9 @@
 import React, { useEffect, ReactNode } from "react";
-import { Container } from "./styles";
 
+import Grid from "../../molecules/Grid";
 import GridItem from "../../atoms/GridItem";
 
+import { Container } from "./styles";
 export interface IIfinteItem {
   key: any;
   children: ReactNode;
@@ -43,9 +44,7 @@ export default function InfiniteScroll({
 
   return (
     <Container>
-      {items.map((item) => {
-        return <GridItem key={item.key}>{item.children}</GridItem>;
-      })}
+      <Grid items={items} rowSize={7} />
     </Container>
   );
 }
