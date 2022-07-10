@@ -28,6 +28,7 @@ export default function Calendar() {
     window.scrollBy({
       top: -10,
       left: 0,
+      behavior: "smooth",
     });
 
     setMockedDays((prev) => [
@@ -40,6 +41,7 @@ export default function Calendar() {
     window.scrollBy({
       top: 10,
       left: 0,
+      behavior: "smooth",
     });
 
     setMockedDays((prev) => [
