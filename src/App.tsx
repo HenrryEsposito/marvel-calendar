@@ -1,18 +1,18 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 import Calendar from "./components/organisms/Calendar";
+import Splash from "./components/organisms/Splash";
+
+import { IAppStore } from "./store/app/types";
+import { appStep } from "./store/app/types";
 
 function App() {
+  const currentAppStep = useSelector((state: IAppStore) => state.appStep);
+
   return (
     <div className="App">
-      <h1>Marvel Calendar</h1>
-      <button
-        onClick={() => {
-          alert("Assemble!!!");
-        }}
-      >
-        Avengers?
-      </button>
-      <Calendar></Calendar>
+      {currentAppStep === appStep.AUTHORIZED ? <Calendar /> : <Splash />}
     </div>
   );
 }
