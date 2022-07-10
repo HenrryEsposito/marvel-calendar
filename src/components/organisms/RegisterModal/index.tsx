@@ -16,6 +16,8 @@ import PasswordInput from "../../molecules/PasswordInput";
 
 import { Container } from "./styles";
 
+import useInputValidators from "../../../hooks/useInputValidators";
+
 export interface IRegisterModal {}
 
 const RegisterModal: React.ForwardRefRenderFunction<
@@ -27,7 +29,14 @@ const RegisterModal: React.ForwardRefRenderFunction<
   const passwordInputRef = useRef<HTMLInputElement>(null);
   const confirmPasswordInputRef = useRef<HTMLInputElement>(null);
 
+  const { validateLength, validateEmail, validadePassword } =
+    useInputValidators();
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const [errValidadeEmail, setErrValidadeEmail] = useState(false);
+  const [errValidadeName, setErrValidadeName] = useState(false);
+  const [errValidadePassword, setErrValidadePassword] = useState(false);
 
   return (
     <Modal ref={forwardedRef}>
@@ -43,6 +52,10 @@ const RegisterModal: React.ForwardRefRenderFunction<
                     inputRef={loginInputRef}
                     label="E-mail"
                     placeholder="tonystark@starkco.com"
+                    onChange={(e) =>
+                      validateEmail(e.target.value, setErrValidadeEmail)
+                    }
+                    error={errValidadeEmail}
                   />
                 </FormControl>
               </Grid>
@@ -54,6 +67,10 @@ const RegisterModal: React.ForwardRefRenderFunction<
                     inputRef={nameInputRef}
                     label="E-mail"
                     placeholder="Tony"
+                    onChange={(e) =>
+                      validateLength(e.target.value, setErrValidadeName, 3)
+                    }
+                    error={errValidadeName}
                   />
                 </FormControl>
               </Grid>
@@ -62,6 +79,15 @@ const RegisterModal: React.ForwardRefRenderFunction<
                   ref={passwordInputRef}
                   showPassword={showPassword}
                   setShowPassword={setShowPassword}
+                  error={errValidadePassword}
+                  onChange={(e) =>
+                    validadePassword(
+                      e.target.value,
+                      confirmPasswordInputRef.current?.value || "",
+                      setErrValidadePassword,
+                      6
+                    )
+                  }
                 />
               </Grid>
               <Grid item xs={6}>
@@ -70,6 +96,15 @@ const RegisterModal: React.ForwardRefRenderFunction<
                   setShowPassword={setShowPassword}
                   ref={confirmPasswordInputRef}
                   label="Confirme a senha"
+                  error={errValidadePassword}
+                  onChange={(e) =>
+                    validadePassword(
+                      e.target.value,
+                      passwordInputRef.current?.value || "",
+                      setErrValidadePassword,
+                      6
+                    )
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
