@@ -16,9 +16,9 @@ import PasswordInput from "../../molecules/PasswordInput";
 
 import { Container } from "./styles";
 
-export interface IModal {}
+export interface ILoginModal {}
 
-const LoginModal: React.ForwardRefRenderFunction<IModalHandles, IModal> = (
+const LoginModal: React.ForwardRefRenderFunction<IModalHandles, ILoginModal> = (
   _,
   forwardedRef
 ) => {
