@@ -42,7 +42,7 @@ export default function Calendar() {
     ]);
   }
 
-  function handleReachBTop() {
+  function handleReachTop() {
     window.scrollBy({
       top: 15,
       left: 0,
@@ -74,7 +74,7 @@ export default function Calendar() {
       <InfiniteScroll
         items={newMockedItems}
         onReachBottom={handleReachBottom}
-        onReachTop={handleReachBTop}
+        onReachTop={handleReachTop}
       ></InfiniteScroll>
     </div>
   );
