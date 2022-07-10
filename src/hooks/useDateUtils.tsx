@@ -42,13 +42,9 @@ export default function useDateUtils() {
   }
 
   function getNextWeekByDay(byDay: Date): Date[] {
-    const weekOfTheDay = getWeekOfDay(byDay);
+    const aWeekAhead = getDayByOffset(byDay, 6);
 
-    const lastDayOfCurrentWeek = weekOfTheDay[weekOfTheDay.length - 1];
-
-    const theFirstDayOfNextWeek = getDayByOffset(lastDayOfCurrentWeek, 1);
-
-    const nextWeek = [...getWeekOfDay(theFirstDayOfNextWeek)];
+    const nextWeek = getWeekOfDay(aWeekAhead);
 
     return nextWeek;
   }
