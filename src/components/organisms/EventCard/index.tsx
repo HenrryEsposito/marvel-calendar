@@ -2,11 +2,11 @@ import * as React from "react";
 
 import Card, { ICard } from "../../molecules/Card";
 
-export interface IEventCalendar extends ICard {
-  day: number;
+export interface IEventCard extends ICard {
+  day?: number;
 }
 
-export default function EventCalendar(props: IEventCalendar) {
+export default function EventCard(props: IEventCard) {
   return (
     <div>
       <Card {...props} />
