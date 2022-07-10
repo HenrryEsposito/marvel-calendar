@@ -49,11 +49,20 @@ export default function useDateUtils() {
     return nextWeek;
   }
 
+  function getPreviousWeekByDay(byDay: Date): Date[] {
+    const aWeekAhead = getDayByOffset(byDay, -6);
+
+    const nextWeek = getWeekOfDay(aWeekAhead);
+
+    return nextWeek;
+  }
+
   return {
     today,
     getDayByOffset,
     getWeekOfDay,
     getNearNextDaysByWeeks,
     getNextWeekByDay,
+    getPreviousWeekByDay,
   };
 }
