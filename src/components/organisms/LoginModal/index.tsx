@@ -36,8 +36,9 @@ const LoginModal: React.ForwardRefRenderFunction<IModalHandles, IModal> = (
             <Grid container spacing={2} p={1}>
               <Grid item xs={6}>
                 <FormControl>
-                  <InputLabel htmlFor="password-input">E-mail</InputLabel>
+                  <InputLabel htmlFor="email-input">E-mail</InputLabel>
                   <OutlinedInput
+                    id="email-input"
                     inputRef={loginInputRef}
                     label="E-mail"
                     placeholder="tonystark@starkco.com"
