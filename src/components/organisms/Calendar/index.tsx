@@ -25,14 +25,27 @@ export default function Calendar() {
   }, [mockedDays]);
 
   function handleReachBottom() {
+    window.scrollBy({
+      top: -10,
+      left: 0,
+    });
+
     setMockedDays((prev) => [
-      ...prev,
+      ...prev.splice(7, prev.length),
       ...getNextWeekByDay(prev[prev.length - 1]),
     ]);
   }
 
   function handleReachBTop() {
-    setMockedDays((prev) => [...getPreviousWeekByDay(prev[0]), ...prev]);
+    window.scrollBy({
+      top: 10,
+      left: 0,
+    });
+
+    setMockedDays((prev) => [
+      ...getPreviousWeekByDay(prev[0]),
+      ...prev.splice(0, prev.length - 7),
+    ]);
   }
 
   return (
