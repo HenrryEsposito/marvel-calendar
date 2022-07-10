@@ -1,9 +1,10 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { ReactNode, useMemo, useState } from "react";
 import { v4 as uniqueId } from "uuid";
 
 import CalendarHeader from "../../atoms/CalendarHeader";
-import InfiniteScroll from "../InfiniteScroll";
+import InfiniteScroll, { IIfinteItem } from "../InfiniteScroll";
 import DaySlot from "../DaySlot";
+import EventCard from "../EventCard";
 
 import useDateUtils from "../../../hooks/useDateUtils";
 
@@ -15,18 +16,22 @@ export default function Calendar() {
     getNearNextDaysByWeeks(4)
   );
 
-  const newMockedItemns = useMemo(() => {
+  const newMockedItems = useMemo<IIfinteItem[]>(() => {
     return mockedDays.map((mockedDay) => {
       return {
         key: uniqueId(),
-        children: <DaySlot key={uniqueId()} dayNumber={mockedDay.getDate()} />,
+        children: (
+          <DaySlot key={uniqueId()} dayNumber={mockedDay.getDate()}>
+            {addRandonEvent()}
+          </DaySlot>
+        ),
       };
     });
   }, [mockedDays]);
 
   function handleReachBottom() {
     window.scrollBy({
-      top: -10,
+      top: -15,
       left: 0,
       behavior: "smooth",
     });
@@ -39,7 +44,7 @@ export default function Calendar() {
 
   function handleReachBTop() {
     window.scrollBy({
-      top: 10,
+      top: 15,
       left: 0,
       behavior: "smooth",
     });
@@ -50,11 +55,24 @@ export default function Calendar() {
     ]);
   }
 
+  function addRandonEvent(): ReactNode {
+    if (Math.round(Math.random() * 10) < 4) {
+      return (
+        <EventCard
+          key={uniqueId()}
+          title="Teste"
+          description="om mais de 2000 anos, suas raízes podem ser encontradas em uma obra de literatura latina..."
+        ></EventCard>
+      );
+    }
+    return <></>;
+  }
+
   return (
     <div className="calendar-base">
       <CalendarHeader />
       <InfiniteScroll
-        items={newMockedItemns}
+        items={newMockedItems}
         onReachBottom={handleReachBottom}
         onReachTop={handleReachBTop}
       ></InfiniteScroll>
