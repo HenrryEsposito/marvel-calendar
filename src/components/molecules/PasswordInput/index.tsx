@@ -14,33 +14,35 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { InternalStandardProps } from "@mui/material";
+import { InputBaseProps } from "@mui/material";
 
-export interface IPasswordInput {
+export interface IPasswordInput extends InternalStandardProps<InputBaseProps> {
   showPassword?: boolean;
   setShowPassword?: Dispatch<SetStateAction<boolean>>;
   label?: string;
 }
 
-function PasswordInput(props: IPasswordInput, ref: any) {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+function PasswordInput(
+  { showPassword, setShowPassword, label, ...rest }: IPasswordInput,
+  ref: any
+) {
+  const [innerShowPassword, setInnerShowPassword] = useState<boolean>(false);
 
   function handleShowPassword() {
-    if (
-      props.setShowPassword !== undefined &&
-      props.showPassword !== undefined
-    ) {
-      return props.setShowPassword((prev) => !prev);
+    if (setShowPassword !== undefined && showPassword !== undefined) {
+      return setShowPassword((prev) => !prev);
     }
 
-    return setShowPassword((prev) => !prev);
+    return setInnerShowPassword((prev) => !prev);
   }
 
   const showPasswordMemo = useMemo(() => {
-    if (props.showPassword !== undefined) {
-      return props.showPassword;
+    if (showPassword !== undefined) {
+      return showPassword;
     }
-    return showPassword;
-  }, [props.showPassword, showPassword]);
+    return innerShowPassword;
+  }, [showPassword, innerShowPassword]);
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -52,7 +54,7 @@ function PasswordInput(props: IPasswordInput, ref: any) {
     <>
       <FormControl>
         <InputLabel htmlFor="password-input">
-          {props.label ? props.label : "Senha"}
+          {label ? label : "Senha"}
         </InputLabel>
         <OutlinedInput
           id="password-input"
@@ -70,8 +72,9 @@ function PasswordInput(props: IPasswordInput, ref: any) {
               </IconButton>
             </InputAdornment>
           }
-          label={props.label ? props.label : "Senha"}
+          label={label ? label : "Senha"}
           placeholder="******"
+          {...rest}
         />
       </FormControl>
     </>
