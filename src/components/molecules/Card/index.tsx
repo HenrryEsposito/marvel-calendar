@@ -1,10 +1,10 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, HTMLProps } from "react";
 import MuiCard from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, CardActions } from "@mui/material";
 
-export interface ICard {
+export interface ICard extends HTMLProps<HTMLDivElement> {
   title: string;
   description: string;
   childrenActions?: ReactNode;
