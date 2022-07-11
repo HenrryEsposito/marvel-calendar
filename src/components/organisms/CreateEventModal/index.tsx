@@ -47,6 +47,31 @@ const CreateEventModal: React.ForwardRefRenderFunction<
     setCharList((prev) => [...prev, char as ICharacterInfo]);
   }
 
+  function validateEventForm(): boolean {
+    if (
+      (titleInputRef.current?.value.length || "") &&
+      (descriptionInputRef.current?.value.length || "") &&
+      (dateInputRef.current?.value.length || "") &&
+      charList.length
+    )
+      return true;
+
+    return false;
+  }
+
+  function handleSubmit() {
+    if (validateEventForm())
+      createNewEvent({
+        id: uniqueId(),
+        title: titleInputRef.current?.value || "",
+        description: descriptionInputRef.current?.value || "",
+        date: dateInputRef.current?.value || "",
+        characters: charList,
+      });
+
+    alert("Todos os campos são obrigatórios!");
+  }
+
   return (
     <Modal ref={forwardedRef}>
       <DialogTitle id="alert-dialog-title">Criar um evento.</DialogTitle>
@@ -110,19 +135,7 @@ const CreateEventModal: React.ForwardRefRenderFunction<
             </Grid>
 
             <Grid item xs={12}>
-              <Button
-                variant="outlined"
-                size="large"
-                onClick={() => {
-                  createNewEvent({
-                    id: uniqueId(),
-                    title: titleInputRef.current?.value || "",
-                    description: descriptionInputRef.current?.value || "",
-                    date: dateInputRef.current?.value || "",
-                    characters: charList,
-                  });
-                }}
-              >
+              <Button variant="outlined" size="large" onClick={handleSubmit}>
                 Criar Evento
               </Button>
             </Grid>
