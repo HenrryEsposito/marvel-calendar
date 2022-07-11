@@ -10,7 +10,7 @@ Author: Henrry Grilo Esposito
 - Open (http://localhost:3000/).
 
 **Warning:**
-You must provide your own public and private Marvel developer keys in order make authorized api calls.
+You must provide your own public and private Marvel developer keys inside .env file in order make authorized api calls.
 
 ## Technologies:
 
