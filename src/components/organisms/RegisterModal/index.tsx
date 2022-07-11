@@ -52,7 +52,7 @@ const RegisterModal: React.ForwardRefRenderFunction<
   function handleChangeName(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
-    validateLength(e.target.value, setErrValidadeName, 3);
+    validateLength(e.target.value, setErrValidadeName, 2);
   }
 
   function handleChangeLogin(
