@@ -1,9 +1,10 @@
+import { v4 as uniqueId } from "uuid";
+import { useDispatch } from "react-redux";
+
 import useLocalStorage from "./useLocalStorage";
 import useDateUtils from "./useDateUtils";
-import { v4 as uniqueId } from "uuid";
-import { useSelector, useDispatch } from "react-redux";
+import useEvents from "./useEvents";
 
-import { rootStore } from "../store/";
 import { setCurrentUser } from "../store/user/actions";
 import { setCurrentStep } from "../store/app/actions";
 import { appStep } from "../store/app/types";
@@ -18,9 +19,9 @@ export interface IUser {
 export default function useAuth() {
   const { cloneDate, today } = useDateUtils();
   const { getItem, setItem } = useLocalStorage();
-  const dispatch = useDispatch();
+  const { createNewUserEventsEntry, loadEventsDataToStore } = useEvents();
 
-  const store = useSelector((state: rootStore) => state);
+  const dispatch = useDispatch();
 
   function generateToken(
     name: string,
@@ -69,6 +70,8 @@ export default function useAuth() {
     alert("Registrado com sucesso!");
 
     persistLogin(newUser);
+
+    createNewUserEventsEntry(newUser.id);
   }
 
   function logIn(login: string, password: string) {
@@ -80,6 +83,7 @@ export default function useAuth() {
 
       if (userByToken) {
         persistLogin(userByToken);
+        loadEventsDataToStore(userByToken.id);
         return;
       }
     }
@@ -103,7 +107,12 @@ export default function useAuth() {
 
     if (expired < 0) setItem("CurrentUser", null);
 
-    dispatch(setCurrentStep(appStep.AUTHORIZED));
+    const currentUserData = findUserByToken(currentUser.token);
+
+    if (!!currentUserData) {
+      persistLogin(currentUserData);
+      loadEventsDataToStore(currentUserData.id);
+    }
   }
 
   function persistLogin(user: IUser) {
