@@ -1,16 +1,15 @@
-import React, { ReactNode, HTMLProps } from "react";
+import React, { HTMLProps, PropsWithChildren } from "react";
 import MuiCard from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, CardActions } from "@mui/material";
+import { CardActionArea } from "@mui/material";
 
-export interface ICard extends HTMLProps<HTMLDivElement> {
+export interface ICard extends HTMLProps<HTMLDivElement>, PropsWithChildren {
   title: string;
   description: string;
-  childrenActions?: ReactNode;
 }
 
-export default function Card({ title, description, childrenActions }: ICard) {
+export default function Card({ title, description, children }: ICard) {
   return (
     <MuiCard>
       <CardActionArea>
@@ -20,10 +19,10 @@ export default function Card({ title, description, childrenActions }: ICard) {
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {description}
+            {children}
           </Typography>
         </CardContent>
       </CardActionArea>
-      {childrenActions && <CardActions>{childrenActions}</CardActions>}
     </MuiCard>
   );
 }
