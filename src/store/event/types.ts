@@ -5,8 +5,7 @@ export interface IEventStore {
 export interface ICharacterInfo {
   id: string;
   name: string;
-  thumb: string;
-  year: number;
+  thumbSrc?: string;
 }
 
 export interface IEventInfo {
