@@ -1,4 +1,5 @@
 import { v4 as uniqueId } from "uuid";
+import md5 from "md5";
 import { useDispatch } from "react-redux";
 
 import useLocalStorage from "./useLocalStorage";
@@ -28,7 +29,7 @@ export default function useAuth() {
     login: string,
     password: string
   ): string {
-    return btoa(name + login + password);
+    return md5(`${name}${login}${password}`);
   }
 
   function findUserByLogin(login: string): IUser | void {
