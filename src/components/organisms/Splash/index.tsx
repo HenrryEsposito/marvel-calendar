@@ -4,7 +4,6 @@ import { Button } from "@mui/material";
 import { IModalHandles } from "../../organisms/Modal";
 import LoginModal from "../../organisms/LoginModal";
 import RegisterModal from "../../organisms/RegisterModal";
-import CreateEventModal from "../CreateEventModal";
 
 import { Container } from "./styles";
 
@@ -27,12 +26,12 @@ export default function Splash() {
   return (
     <Container>
       <Button variant="outlined" size="large" onClick={handleOpenLoginModal}>
-        event
+        Login
       </Button>
       <Button variant="outlined" size="large" onClick={handleOpenRegisterModal}>
         Registrar
       </Button>
-      <CreateEventModal ref={loginModalRef} />
+      <LoginModal ref={loginModalRef} />
       <RegisterModal ref={registerModalRef} />
     </Container>
   );
