@@ -43,7 +43,10 @@ const CreateEventModal: React.ForwardRefRenderFunction<
     if (!!charToSearch)
       char = (await getCharacter(charToSearch)) as ICharacterInfo;
 
-    if (!char) return alert("Nenhum personagem encontrado com esse nome!");
+    if (!char)
+      return alert(
+        "Nenhum personagem encontrado com esse nome! (Os nomes devem ser em inglês!)"
+      );
 
     setCharList((prev) => [...prev, char as ICharacterInfo]);
   }
@@ -69,7 +72,8 @@ const CreateEventModal: React.ForwardRefRenderFunction<
         description: descriptionInputRef.current?.value || "",
         characters: charList,
       });
-      return;
+
+      return window.location.reload();
     }
 
     alert("Todos os campos são obrigatórios!");
