@@ -57,6 +57,19 @@ export default function useDateUtils() {
     return nextWeek;
   }
 
+  function compareDateWithoutTime(firstDate: Date, secoundDate: Date): boolean {
+    let firstDateWithoutTime = cloneDate(firstDate);
+    let secoundDateWithoutTime = cloneDate(secoundDate);
+
+    firstDateWithoutTime.setHours(0, 0, 0, 0);
+    secoundDateWithoutTime.setHours(0, 0, 0, 0);
+
+    return (
+      firstDateWithoutTime.toISOString() ===
+      secoundDateWithoutTime.toISOString()
+    );
+  }
+
   return {
     today,
     cloneDate,
@@ -65,5 +78,6 @@ export default function useDateUtils() {
     getNearNextDaysByWeeks,
     getNextWeekByDay,
     getPreviousWeekByDay,
+    compareDateWithoutTime,
   };
 }
