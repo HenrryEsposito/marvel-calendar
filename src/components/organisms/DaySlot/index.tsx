@@ -29,7 +29,7 @@ export default function DaySlot({ date, children }: IDaySlot) {
   return (
     <Container
       onDrop={(e) => {
-        drop(e, nodeId);
+        drop(e, nodeId, date);
       }}
       onDragOver={dragOver}
     >
