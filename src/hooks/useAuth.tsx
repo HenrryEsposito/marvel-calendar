@@ -4,8 +4,8 @@ import { v4 as uniqueId } from "uuid";
 import { useSelector, useDispatch } from "react-redux";
 
 import { rootStore } from "../store/";
-import { actionType as userActionType } from "../store/user/actions";
-import { actionType as appActionType } from "../store/app/actions";
+import { setCurrentUser } from "../store/user/actions";
+import { setCurrentStep } from "../store/app/actions";
 import { appStep } from "../store/app/types";
 
 export interface IUser {
@@ -89,10 +89,7 @@ export default function useAuth() {
 
   function logOut() {
     setItem("CurrentUser", {});
-    dispatch({
-      type: appActionType.SET_CURRENT_STEP,
-      payload: appStep.SPLASH,
-    });
+    dispatch(setCurrentStep(appStep.SPLASH));
   }
 
   function refreshLogin() {
@@ -106,19 +103,13 @@ export default function useAuth() {
 
     if (expired < 0) setItem("CurrentUser", null);
 
-    dispatch({
-      type: appActionType.SET_CURRENT_STEP,
-      payload: appStep.AUTHORIZED,
-    });
+    dispatch(setCurrentStep(appStep.AUTHORIZED));
   }
 
   function persistLogin(user: IUser) {
-    dispatch({ type: userActionType.SET_CURRENT_USER, payload: user });
+    dispatch(setCurrentUser(user));
 
-    dispatch({
-      type: appActionType.SET_CURRENT_STEP,
-      payload: appStep.AUTHORIZED,
-    });
+    dispatch(setCurrentStep(appStep.AUTHORIZED));
 
     const expirationDate = cloneDate(today).setDate(today.getDate() + 1);
 
