@@ -18,14 +18,6 @@ export default function useInputValidators() {
     setErr(!value.match(regexEmail));
   };
 
-  const validadeCompare = (
-    value: string,
-    compareToValue: string,
-    setErr: Dispatch<SetStateAction<boolean>>
-  ) => {
-    setErr(value !== compareToValue);
-  };
-
   const validadePassword = (
     value: string,
     compareToValue: string,
@@ -40,7 +32,6 @@ export default function useInputValidators() {
   return {
     validateLength,
     validateEmail,
-    validadeCompare,
     validadePassword,
   };
 }
