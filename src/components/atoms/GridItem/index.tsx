@@ -1,10 +1,11 @@
-import React, { HTMLProps, ReactNode } from "react";
+import React, { HTMLProps, PropsWithChildren } from "react";
 
 import { Container } from "./styles";
 
-export interface IGridItem extends HTMLProps<HTMLDivElement> {
+export interface IGridItem
+  extends HTMLProps<HTMLDivElement>,
+    PropsWithChildren {
   key: string;
-  children?: ReactNode;
 }
 
 export default function GridItem({ children, id, className }: IGridItem) {
