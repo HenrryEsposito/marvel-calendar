@@ -4,7 +4,7 @@ import { actionType } from "./actions";
 
 const INITIAL_STATE: IAppStore = { appStep: appStep.SPLASH };
 
-export function appReducer(state = INITIAL_STATE, action: IAction) {
+export function appReducer(state = INITIAL_STATE, action: IAction): IAppStore {
   switch (action.type) {
     case actionType.SET_CURRENT_STEP:
       return { ...state, appStep: action.payload };

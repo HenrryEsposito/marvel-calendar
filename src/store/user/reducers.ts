@@ -6,7 +6,10 @@ const INITIAL_STATE: IUserStore = {
   currentUserInfo: { id: "", login: "", name: "", token: "" },
 };
 
-export function userReducer(state = INITIAL_STATE, action: IAction) {
+export function userReducer(
+  state = INITIAL_STATE,
+  action: IAction
+): IUserStore {
   switch (action.type) {
     case actionType.SET_CURRENT_USER:
       return { ...state, currentUserInfo: action.payload };
