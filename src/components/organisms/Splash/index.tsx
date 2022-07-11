@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { IModalHandles } from "../../organisms/Modal";
 import LoginModal from "../../organisms/LoginModal";
 import RegisterModal from "../../organisms/RegisterModal";
+import CreateEventModal from "../CreateEventModal";
 
 import { Container } from "./styles";
 
@@ -15,27 +16,23 @@ export default function Splash() {
     refToOpen.current?.handleOpenModal();
   }
 
+  function handleOpenLoginModal() {
+    openModal(loginModalRef);
+  }
+
+  function handleOpenRegisterModal() {
+    openModal(registerModalRef);
+  }
+
   return (
     <Container>
-      <Button
-        variant="outlined"
-        size="large"
-        onClick={() => {
-          openModal(loginModalRef);
-        }}
-      >
-        Entrar
+      <Button variant="outlined" size="large" onClick={handleOpenLoginModal}>
+        event
       </Button>
-      <Button
-        variant="outlined"
-        size="large"
-        onClick={() => {
-          openModal(registerModalRef);
-        }}
-      >
+      <Button variant="outlined" size="large" onClick={handleOpenRegisterModal}>
         Registrar
       </Button>
-      <LoginModal ref={loginModalRef} />
+      <CreateEventModal ref={loginModalRef} />
       <RegisterModal ref={registerModalRef} />
     </Container>
   );

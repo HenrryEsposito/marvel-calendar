@@ -29,6 +29,13 @@ const LoginModal: React.ForwardRefRenderFunction<IModalHandles, ILoginModal> = (
 
   const { logIn } = useAuth();
 
+  function handleLogin() {
+    logIn(
+      loginInputRef.current?.value || "",
+      passwordInputRef.current?.value || ""
+    );
+  }
+
   return (
     <Modal ref={forwardedRef}>
       <Container>
@@ -57,12 +64,7 @@ const LoginModal: React.ForwardRefRenderFunction<IModalHandles, ILoginModal> = (
                   variant="outlined"
                   size="large"
                   endIcon={<LoginIcon />}
-                  onClick={() => {
-                    logIn(
-                      loginInputRef.current?.value || "",
-                      passwordInputRef.current?.value || ""
-                    );
-                  }}
+                  onClick={handleLogin}
                 >
                   Login
                 </Button>
