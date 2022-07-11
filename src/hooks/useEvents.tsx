@@ -16,11 +16,11 @@ export default function useEvents() {
 
   const dispatch = useDispatch();
   const eventStore = useSelector((state: rootStore) => state.eventStore);
-  const userId = useSelector(
+  const currentUserId = useSelector(
     (state: rootStore) => state.userStore.currentUserInfo.id
   );
 
-  function createNewUserEventsEntry() {
+  function createNewUserEventsEntry(userId: string) {
     const userEventsDataList: IUserEventsData[] = getItem("EventsData", []);
 
     userEventsDataList.push({ userId: userId, events: [] });
@@ -28,7 +28,7 @@ export default function useEvents() {
     setItem("EventsData", userEventsDataList);
   }
 
-  function loadEventsDataToStore() {
+  function loadEventsDataToStore(userId: string) {
     const thisUserEvents = getEvents();
 
     if (!!thisUserEvents) dispatch(setEvents(thisUserEvents));
@@ -38,7 +38,7 @@ export default function useEvents() {
     const userEventsDataList: IUserEventsData[] = getItem("EventsData", []);
 
     const thisUserEvents: IEventInfo[] | undefined = userEventsDataList.find(
-      (data) => data.userId === userId
+      (data) => data.userId === currentUserId
     )?.events;
 
     if (!!thisUserEvents) return thisUserEvents;
@@ -49,7 +49,7 @@ export default function useEvents() {
     const userEventsDataList: IUserEventsData[] = getItem("EventsData", []);
 
     const thisUserEventData = userEventsDataList.find(
-      (data) => data.userId === userId
+      (data) => data.userId === currentUserId
     );
 
     if (thisUserEventData) thisUserEventData.events = newEventList;
