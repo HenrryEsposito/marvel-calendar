@@ -61,7 +61,7 @@ const CreateEventModal: React.ForwardRefRenderFunction<
 
   function handleSubmit() {
     if (validateEventForm())
-      createNewEvent({
+      return createNewEvent({
         id: uniqueId(),
         title: titleInputRef.current?.value || "",
         description: descriptionInputRef.current?.value || "",
