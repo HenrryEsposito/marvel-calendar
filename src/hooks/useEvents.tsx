@@ -45,7 +45,10 @@ export default function useEvents() {
     return [];
   }
 
-  function patchUserEventList(newEventList: IEventInfo[]) {
+  function patchUserEventList(
+    newEventList: IEventInfo[],
+    preventDefault?: boolean
+  ) {
     const userEventsDataList: IUserEventsData[] = getItem("EventsData", []);
 
     const thisUserEventData = userEventsDataList.find(
@@ -55,14 +58,26 @@ export default function useEvents() {
     if (thisUserEventData) thisUserEventData.events = newEventList;
 
     setItem("EventsData", userEventsDataList);
+    if (preventDefault) return;
 
     dispatch(setEvents(newEventList));
   }
 
   function createNewEvent(newEvent: IEventInfo) {
-    console.log("createNewEvent", newEvent, "store", eventStore.events);
     const newEventList: IEventInfo[] = [...eventStore.events, newEvent];
     patchUserEventList(newEventList);
+  }
+
+  function patchEventDateById(eventId: string, eventDate: string) {
+    const currentEventList: IEventInfo[] = [...eventStore.events];
+
+    const eventToPatch = currentEventList.find((currentEvent) => {
+      return currentEvent.id === eventId;
+    });
+
+    if (eventToPatch) eventToPatch.date = eventDate;
+
+    patchUserEventList(currentEventList, true);
   }
 
   return {
@@ -71,5 +86,6 @@ export default function useEvents() {
     getEvents,
     createNewEvent,
     patchUserEventList,
+    patchEventDateById,
   };
 }
