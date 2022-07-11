@@ -1,7 +1,10 @@
 import React, { PropsWithChildren, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 
-export interface IModal extends PropsWithChildren {}
+export interface IModal extends PropsWithChildren {
+  open?: boolean;
+  onClose?: () => void;
+}
 
 export interface IModalHandles {
   handleOpenModal: () => void;
@@ -24,7 +27,11 @@ const Modal: React.ForwardRefRenderFunction<IModalHandles, IModal> = (
   });
 
   return (
-    <Dialog open={open} keepMounted onClose={handleCloseModal}>
+    <Dialog
+      open={!!props.open ? !!props.open : open}
+      keepMounted
+      onClose={!!props.onClose ? props.onClose : handleCloseModal}
+    >
       {props.children}
     </Dialog>
   );
