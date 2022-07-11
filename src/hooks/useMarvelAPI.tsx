@@ -1,9 +1,12 @@
 import md5 from "md5";
 
 import { marvelApi } from "../services/api";
+import { ICharacterInfo } from "../store/event/types";
 
 export default function useMarvelAPI() {
-  async function getCharacters(name: string) {
+  async function getCharacter(
+    name: string
+  ): Promise<ICharacterInfo | undefined> {
     const timeStamp = new Date().getTime();
 
     try {
@@ -18,19 +21,29 @@ export default function useMarvelAPI() {
         },
       });
 
-      let data = res.data.data.results;
-      return data;
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
+      const results = res.data.data.results;
+
+      if (results.length) {
+        const firstChar = results[0];
+        return {
+          id: firstChar.id,
+          name: firstChar.name,
+          thumbSrc: `${firstChar.thumbnail.path}.${firstChar.thumbnail.extension}`,
+        };
       }
 
+      return;
+    } catch (error) {
       alert("Houve algum problema com a API da Marvel!");
-      return [];
+
+      if (error instanceof Error) {
+        console.log(error.message);
+        throw error;
+      }
     }
   }
 
   return {
-    getCharacters,
+    getCharacter,
   };
 }
