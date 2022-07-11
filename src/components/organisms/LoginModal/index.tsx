@@ -16,6 +16,8 @@ import PasswordInput from "../../molecules/PasswordInput";
 
 import { Container } from "./styles";
 
+import useAuth from "../../../hooks/useAuth";
+
 export interface ILoginModal {}
 
 const LoginModal: React.ForwardRefRenderFunction<IModalHandles, ILoginModal> = (
@@ -24,6 +26,8 @@ const LoginModal: React.ForwardRefRenderFunction<IModalHandles, ILoginModal> = (
 ) => {
   const loginInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
+
+  const { logIn } = useAuth();
 
   return (
     <Modal ref={forwardedRef}>
@@ -54,10 +58,9 @@ const LoginModal: React.ForwardRefRenderFunction<IModalHandles, ILoginModal> = (
                   size="large"
                   endIcon={<LoginIcon />}
                   onClick={() => {
-                    console.log(
-                      "modal login",
-                      loginInputRef.current?.value,
-                      passwordInputRef.current?.value
+                    logIn(
+                      loginInputRef.current?.value || "",
+                      passwordInputRef.current?.value || ""
                     );
                   }}
                 >
