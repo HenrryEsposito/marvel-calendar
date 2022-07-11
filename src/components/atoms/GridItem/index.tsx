@@ -7,6 +7,10 @@ export interface IGridItem extends HTMLProps<HTMLDivElement> {
   children?: ReactNode;
 }
 
-export default function GridItem({ children, id }: IGridItem) {
-  return <Container id={id}>{children}</Container>;
+export default function GridItem({ children, id, className }: IGridItem) {
+  return (
+    <Container id={id} className={className}>
+      {children}
+    </Container>
+  );
 }
