@@ -29,16 +29,16 @@ export default function useEvents() {
   }
 
   function loadEventsDataToStore(userId: string) {
-    const thisUserEvents = getEvents();
+    const thisUserEvents = getEvents(userId);
 
     if (!!thisUserEvents) dispatch(setEvents(thisUserEvents));
   }
 
-  function getEvents(): IEventInfo[] {
+  function getEvents(userId: string): IEventInfo[] {
     const userEventsDataList: IUserEventsData[] = getItem("EventsData", []);
 
     const thisUserEvents: IEventInfo[] | undefined = userEventsDataList.find(
-      (data) => data.userId === currentUserId
+      (data) => data.userId === userId
     )?.events;
 
     if (!!thisUserEvents) return thisUserEvents;
@@ -60,6 +60,7 @@ export default function useEvents() {
   }
 
   function createNewEvent(newEvent: IEventInfo) {
+    console.log("createNewEvent", newEvent, "store", eventStore.events);
     const newEventList: IEventInfo[] = [...eventStore.events, newEvent];
     patchUserEventList(newEventList);
   }
