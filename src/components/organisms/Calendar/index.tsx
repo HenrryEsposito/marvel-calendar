@@ -5,12 +5,15 @@ import CalendarHeader from "../../atoms/CalendarHeader";
 import InfiniteScroll, { IIfinteItem } from "../InfiniteScroll";
 import DaySlot from "../DaySlot";
 import EventCard from "../EventCard";
+import CreateEventModal from "../CreateEventModal";
 
 import useDateUtils from "../../../hooks/useDateUtils";
+import { useEventModalContext } from "../../../contexts/EventModal/useBoard";
 
 export default function Calendar() {
   const { getNearNextDaysByWeeks, getNextWeekByDay, getPreviousWeekByDay } =
     useDateUtils();
+  const { showModal, setShowModal } = useEventModalContext();
 
   const [mockedDays, setMockedDays] = useState<Date[]>(
     getNearNextDaysByWeeks(4)
@@ -21,7 +24,7 @@ export default function Calendar() {
       return {
         key: uniqueId(),
         children: (
-          <DaySlot key={uniqueId()} dayNumber={mockedDay.getDate()}>
+          <DaySlot key={uniqueId()} date={mockedDay}>
             {addRandonEvent()}
           </DaySlot>
         ),
@@ -68,6 +71,10 @@ export default function Calendar() {
     return <></>;
   }
 
+  function handleCloseEventModal() {
+    setShowModal(false);
+  }
+
   return (
     <div className="calendar-base">
       <CalendarHeader />
@@ -76,6 +83,7 @@ export default function Calendar() {
         onReachBottom={handleReachBottom}
         onReachTop={handleReachTop}
       ></InfiniteScroll>
+      <CreateEventModal open={showModal} onClose={handleCloseEventModal} />
     </div>
   );
 }

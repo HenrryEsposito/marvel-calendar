@@ -13,25 +13,26 @@ import { v4 as uniqueId } from "uuid";
 
 import useMarvelAPI from "../../../hooks/useMarvelAPI";
 import useEvents from "../../../hooks/useEvents";
+import { useEventModalContext } from "../../../contexts/EventModal/useBoard";
 
-import Modal, { IModalHandles } from "../Modal";
+import Modal, { IModalHandles, IModal } from "../Modal";
 import List from "../../molecules/List";
 
 import { ICharacterInfo } from "../../../store/event/types";
 
-export interface ICreateEventModal {}
+export interface ICreateEventModal extends IModal {}
 
 const CreateEventModal: React.ForwardRefRenderFunction<
   IModalHandles,
   ICreateEventModal
-> = (_, forwardedRef) => {
+> = (props, forwardedRef) => {
   const titleInputRef = useRef<HTMLInputElement>(null);
   const descriptionInputRef = useRef<HTMLInputElement>(null);
-  const dateInputRef = useRef<HTMLInputElement>(null);
   const charInputRef = useRef<HTMLInputElement>(null);
 
   const { getCharacter } = useMarvelAPI();
   const { createNewEvent } = useEvents();
+  const { currentDate, setShowModal } = useEventModalContext();
 
   const [charList, setCharList] = useState<ICharacterInfo[]>([]);
 
@@ -51,7 +52,6 @@ const CreateEventModal: React.ForwardRefRenderFunction<
     if (
       (titleInputRef.current?.value.length || "") &&
       (descriptionInputRef.current?.value.length || "") &&
-      (dateInputRef.current?.value.length || "") &&
       charList.length
     )
       return true;
@@ -60,20 +60,23 @@ const CreateEventModal: React.ForwardRefRenderFunction<
   }
 
   function handleSubmit() {
-    if (validateEventForm())
-      return createNewEvent({
+    if (validateEventForm()) {
+      setShowModal(false);
+      createNewEvent({
         id: uniqueId(),
+        date: currentDate,
         title: titleInputRef.current?.value || "",
         description: descriptionInputRef.current?.value || "",
-        date: dateInputRef.current?.value || "",
         characters: charList,
       });
+      return;
+    }
 
     alert("Todos os campos são obrigatórios!");
   }
 
   return (
-    <Modal ref={forwardedRef}>
+    <Modal ref={forwardedRef} {...props}>
       <DialogTitle id="alert-dialog-title">Criar um evento.</DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -88,18 +91,6 @@ const CreateEventModal: React.ForwardRefRenderFunction<
                 />
               </FormControl>
             </Grid>
-
-            <Grid item xs={6}>
-              <FormControl>
-                <InputLabel htmlFor="date-input">Data de Lançamento</InputLabel>
-                <OutlinedInput
-                  id="date-input"
-                  inputRef={dateInputRef}
-                  label="Data de Lançamento"
-                />
-              </FormControl>
-            </Grid>
-
             <Grid item xs={12}>
               <FormControl fullWidth>
                 <InputLabel htmlFor="description-input">Descrição</InputLabel>
@@ -114,12 +105,11 @@ const CreateEventModal: React.ForwardRefRenderFunction<
 
             <Grid item xs={6}>
               <FormControl>
-                <InputLabel htmlFor="date-input">Personagem</InputLabel>
+                <InputLabel htmlFor="char-input">Personagem</InputLabel>
                 <OutlinedInput
                   id="search-character-input"
                   inputRef={charInputRef}
                   label="Personagem"
-                  onChange={(e) => console.log(e.target.value)}
                 />
               </FormControl>
             </Grid>

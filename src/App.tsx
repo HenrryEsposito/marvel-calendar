@@ -7,11 +7,11 @@ import Splash from "./components/organisms/Splash";
 import { rootStore } from "./store";
 import { appStep } from "./store/app/types";
 
-import useLocalStorage from "./hooks/useLocalStorage";
 import useAuth from "./hooks/useAuth";
 
+import { EventModalContextProvider } from "./contexts/EventModal/Provider";
+
 function App() {
-  const { setItem, getItem } = useLocalStorage();
   const { refreshLogin } = useAuth();
 
   useEffect(() => {
@@ -24,7 +24,9 @@ function App() {
 
   return (
     <div className="App">
-      {currentAppStep === appStep.AUTHORIZED ? <Calendar /> : <Splash />}
+      <EventModalContextProvider>
+        {currentAppStep === appStep.AUTHORIZED ? <Calendar /> : <Splash />}
+      </EventModalContextProvider>
     </div>
   );
 }
