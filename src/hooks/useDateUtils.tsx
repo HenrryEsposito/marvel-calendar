@@ -59,6 +59,7 @@ export default function useDateUtils() {
 
   return {
     today,
+    cloneDate,
     getDayByOffset,
     getWeekOfDay,
     getNearNextDaysByWeeks,
