@@ -28,7 +28,7 @@ export default function useAuth() {
     login: string,
     password: string
   ): string {
-    return name + login + password;
+    return btoa(name + login + password);
   }
 
   function findUserByLogin(login: string): IUser | void {
