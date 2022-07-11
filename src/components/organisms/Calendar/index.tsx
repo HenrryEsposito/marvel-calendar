@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { v4 as uniqueId } from "uuid";
+import { useSelector } from "react-redux";
+
+import { rootStore } from "../../../store";
 
 import CalendarHeader from "../../atoms/CalendarHeader";
 import InfiniteScroll from "../InfiniteScroll";
@@ -35,8 +38,10 @@ export default function Calendar() {
                     return (
                       <EventCard
                         key={uniqueId()}
+                        eventId={event.id}
                         title={event?.title || ""}
                         description={event?.description || ""}
+                        chars={event.characters}
                       />
                     );
                   })}
